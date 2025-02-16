@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Loader from "../Loader/Loader";
@@ -9,13 +9,19 @@ import axios from "axios";
 const API_KEY = "6ty7wQg7-kFUoyifT_1CjnBZtguD0ytMFc4SZMWtFbk";
 const BASE_URL = "https://api.unsplash.com/search/photos";
 
-function App() {
-  const [images, setImages] = useState([]);
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [modalImage, setModalImage] = useState(null);
+interface Image {
+  id: string;
+  urls: { small: string; regular: string };
+  alt_description: string;
+}
+
+const App: React.FC = () => {
+  const [images, setImages] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [modalImage, setModalImage] = useState<Image | null>(null);
 
   useEffect(() => {
     if (!query) return;
@@ -23,7 +29,7 @@ function App() {
     const fetchImages = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(BASE_URL, {
+        const response = await axios.get<{ results: Image[] }>(BASE_URL, {
           params: { query, page, client_id: API_KEY },
         });
         setImages((prev) => [...prev, ...response.data.results]);
@@ -38,7 +44,7 @@ function App() {
     fetchImages();
   }, [query, page]);
 
-  const handleSearch = (newQuery) => {
+  const handleSearch = (newQuery: string) => {
     setQuery(newQuery);
     setImages([]);
     setPage(1);
@@ -46,7 +52,7 @@ function App() {
 
   const handleLoadMore = () => setPage((prev) => prev + 1);
 
-  const openModal = (image) => setModalImage(image);
+  const openModal = (image: Image) => setModalImage(image);
 
   const closeModal = () => setModalImage(null);
 
@@ -60,6 +66,6 @@ function App() {
       {modalImage && <ImageModal image={modalImage} onClose={closeModal} />}
     </div>
   );
-}
+};
 
 export default App;

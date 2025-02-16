@@ -1,10 +1,14 @@
-import  { useState } from "react";
-import styles from "./SearchBar.module.css"
+import { useState } from "react";
+import styles from "./SearchBar.module.css";
 
-export default function SearchBar({ onSubmit }) {
-  const [input, setInput] = useState("");
+interface SearchBarProps {
+  onSubmit: (query: string) => void;
+}
 
-  const handleSubmit = (e) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const [input, setInput] = useState<string>("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (input.trim() === "") return alert("Enter text to search for.");
     onSubmit(input.trim());
@@ -26,4 +30,6 @@ export default function SearchBar({ onSubmit }) {
       </form>
     </header>
   );
-}
+};
+
+export default SearchBar;
