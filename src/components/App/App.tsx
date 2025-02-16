@@ -11,7 +11,7 @@ const BASE_URL = "https://api.unsplash.com/search/photos";
 
 interface Image {
   id: string;
-  urls: { small: string; regular: string };
+  urls: { small: string; regular?: string };
   alt_description: string;
 }
 
@@ -32,7 +32,14 @@ const App: React.FC = () => {
         const response = await axios.get<{ results: Image[] }>(BASE_URL, {
           params: { query, page, client_id: API_KEY },
         });
-        setImages((prev) => [...prev, ...response.data.results]);
+
+        // Обновляем изображения, гарантируя наличие `regular`
+        const formattedImages = response.data.results.map(img => ({
+          ...img,
+          urls: { small: img.urls.small, regular: img.urls.regular ?? img.urls.small }
+        }));
+
+        setImages((prev) => [...prev, ...formattedImages]);
         setError(null);
       } catch (err) {
         setError("Failed to upload images.");
@@ -52,14 +59,10 @@ const App: React.FC = () => {
 
   const handleLoadMore = () => setPage((prev) => prev + 1);
 
-  const openModal = (image: Image) => {
-    setModalImage(image);
-  };
-  
-  const closeModal = () => {
-    setModalImage(null);
-  };
-  
+  const openModal = (image: Image) => setModalImage(image);
+
+  const closeModal = () => setModalImage(null);
+
   return (
     <div>
       <SearchBar onSubmit={handleSearch} />
@@ -73,3 +76,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
