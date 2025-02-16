@@ -21,3 +21,4 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
 };
 
 export default ImageModal;
+

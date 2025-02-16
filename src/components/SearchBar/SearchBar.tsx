@@ -33,3 +33,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
 };
 
 export default SearchBar;
+

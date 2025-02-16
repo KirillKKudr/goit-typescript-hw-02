@@ -34,8 +34,12 @@ const App: React.FC = () => {
         });
 
         const formattedImages = response.data.results.map(img => ({
-          ...img,
-          urls: { small: img.urls.small, regular: img.urls.regular || img.urls.small }
+          id: img.id,
+          urls: { 
+            small: img.urls.small, 
+            regular: img.urls.regular ?? img.urls.small 
+          },
+          alt_description: img.alt_description || "No description"
         }));
 
         setImages((prev) => [...prev, ...formattedImages]);
@@ -68,7 +72,7 @@ const App: React.FC = () => {
       {error && <p>{error}</p>}
       <ImageGallery images={images} onImageClick={openModal} />
       {loading && <Loader />}
-      {images.length > 0 && <LoadMoreBtn onClick={handleLoadMore} />}
+      {images.length > 0 && !loading && <LoadMoreBtn onClick={handleLoadMore} />}
       {modalImage && <ImageModal image={modalImage} onClose={closeModal} />}
     </div>
   );

@@ -3,7 +3,7 @@ import styles from "./ImageGallery.module.css";
 
 interface Image {
   id: string;
-  urls: { small: string; regular?: string };
+  urls: { small: string; regular: string };
   alt_description: string;
 }
 
@@ -25,3 +25,4 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, onImageClick }) => 
 };
 
 export default ImageGallery;
+
