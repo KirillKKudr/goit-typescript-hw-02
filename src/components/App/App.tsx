@@ -52,10 +52,14 @@ const App: React.FC = () => {
 
   const handleLoadMore = () => setPage((prev) => prev + 1);
 
-  const openModal = (image: Image) => setModalImage(image);
-
-  const closeModal = () => setModalImage(null);
-
+  const openModal = (image: Image) => {
+    setModalImage(image);
+  };
+  
+  const closeModal = () => {
+    setModalImage(null);
+  };
+  
   return (
     <div>
       <SearchBar onSubmit={handleSearch} />
