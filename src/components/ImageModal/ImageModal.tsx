@@ -1,22 +1,21 @@
 import Modal from "react-modal";
-import styles from "./ImageModal.module.css";
 
 interface Image {
-  urls: { regular: string };
+  id: string;
+  urls: { small: string; regular: string };
   alt_description: string;
 }
 
 interface ImageModalProps {
-  image: Image | null;
+  image: Image;
   onClose: () => void;
 }
 
-Modal.setAppElement("#root");
-
 const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
   return (
-    <Modal isOpen={!!image} onRequestClose={onClose} className={styles.modal}>
-      {image && <img className={styles.img} src={image.urls.regular} alt={image.alt_description} />}
+    <Modal isOpen={!!image} onRequestClose={onClose} ariaHideApp={false}>
+      <img src={image.urls.regular} alt={image.alt_description} />
+      <button onClick={onClose}>Close</button>
     </Modal>
   );
 };

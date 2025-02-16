@@ -11,7 +11,7 @@ const BASE_URL = "https://api.unsplash.com/search/photos";
 
 interface Image {
   id: string;
-  urls: { small: string; regular?: string };
+  urls: { small: string; regular: string };
   alt_description: string;
 }
 
@@ -33,16 +33,15 @@ const App: React.FC = () => {
           params: { query, page, client_id: API_KEY },
         });
 
-        // Обновляем изображения, гарантируя наличие `regular`
         const formattedImages = response.data.results.map(img => ({
           ...img,
-          urls: { small: img.urls.small, regular: img.urls.regular ?? img.urls.small }
+          urls: { small: img.urls.small, regular: img.urls.regular || img.urls.small }
         }));
 
         setImages((prev) => [...prev, ...formattedImages]);
         setError(null);
       } catch (err) {
-        setError("Failed to upload images.");
+        setError("Failed to load images.");
       } finally {
         setLoading(false);
       }
