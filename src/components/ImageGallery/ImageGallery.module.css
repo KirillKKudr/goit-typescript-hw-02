@@ -1,0 +1,34 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.list_item {
+    list-style: none;
+    width: 350px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.list_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.list_item:hover,
+.list_item:focus {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+}
+
+.list_item img:hover,
+.list_item img:focus {
+    transform: scale(1.1); 
+}

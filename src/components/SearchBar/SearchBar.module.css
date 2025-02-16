@@ -1,0 +1,19 @@
+form {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.button{
+    background-color: blue;
+    color: #ffff;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input{
+    padding: 15px 40px;
+    border-radius: 5px;
+}
